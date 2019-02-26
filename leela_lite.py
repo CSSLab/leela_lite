@@ -53,8 +53,6 @@ while True:
     print("best: ", best)
     print("Time: {:.3f} nps".format(nodes/elapsed))
     print(nn.evaluate.cache_info())
-    for i in range(13):
-        print('\033[F', end = '\r')
     board.push_uci(best)
     if board.pc_board.is_game_over() or board.is_draw():
         result = board.pc_board.result(claim_draw=True)
@@ -65,3 +63,5 @@ while True:
         pgn_game.headers['Result'] = result
         print(pgn_game)
         break
+    for i in range(13):
+        print('\033[F', end = '\r')
