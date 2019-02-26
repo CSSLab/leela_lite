@@ -30,7 +30,7 @@ def load_leela_network():
     else:
         net = load_network(backend='pytorch_cuda', filename=weights, policy_softmax_temp=2.2)
     nn = search.NeuralNet(net=net, lru_size=min(5000, nodes))
-    
+
 
 load_leela_network()
 
@@ -53,14 +53,15 @@ while True:
     print("best: ", best)
     print("Time: {:.3f} nps".format(nodes/elapsed))
     print(nn.evaluate.cache_info())
+    for i in range(13):
+        print('\033[F', end = '\r')
     board.push_uci(best)
     if board.pc_board.is_game_over() or board.is_draw():
         result = board.pc_board.result(claim_draw=True)
         print("Game over... result is {}".format(result))
         print(board.unicode())
         print()
-        pgn_game = chess.pgn.Game.from_board(board.pc_board) 
+        pgn_game = chess.pgn.Game.from_board(board.pc_board)
         pgn_game.headers['Result'] = result
         print(pgn_game)
         break
-    
